@@ -43,6 +43,7 @@ class PushToTalk:
 
         self._vad = create_vad(cfg.vad_aggressiveness) if cfg.vad_enabled else None
         self._auto_stop_timer: threading.Timer | None = None
+        self._toggle_lock = threading.Lock()
 
     # -- tray state helper --
 
@@ -145,6 +146,18 @@ class PushToTalk:
             self._record_thread = None
             self._record_stop.clear()
             self._set_tray_state("idle")
+
+    def toggle_recording(self) -> None:
+        """Toggle recording state (used for signals, menu, and one-shot triggers)."""
+        if not self._toggle_lock.acquire(blocking=False):
+            return  # Another toggle is already in progress
+        try:
+            if self.recording:
+                self.stop_recording()
+            else:
+                self.start_recording()
+        finally:
+            self._toggle_lock.release()
 
     # -- API call and text insertion --
 
