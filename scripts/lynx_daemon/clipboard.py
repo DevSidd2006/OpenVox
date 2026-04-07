@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 import shutil
 import subprocess
+import time
 
 from .config import cfg
 
@@ -40,30 +41,56 @@ def copy_to_clipboard(text: str) -> bool:
 
 
 def paste_into_active_window(text: str) -> bool:
-    """Type *text* directly into the currently focused window."""
+    """Type *text* directly into the currently focused window.
+
+    On Wayland the priority is:
+    1. ydotool — works with *all* windows (native Wayland and XWayland)
+    2. wtype  — only works with native Wayland windows
+    3. clipboard paste via wl-copy + wtype Ctrl+V — universal fallback
+    4. xdotool — only works with XWayland windows (needs DISPLAY)
+    """
     if not cfg.auto_paste:
         return False
 
-    # Always prefer direct typing — avoids clipboard race conditions.
+    # Brief pause to let window focus settle — important when triggered
+    # via SIGUSR1 / custom system shortcut rather than held hotkey.
+    time.sleep(0.15)
+
     if _is_wayland():
+        # ydotool works at the kernel /dev/uinput level, so it types into
+        # ANY focused window regardless of Wayland vs XWayland.
+        if shutil.which("ydotool"):
+            return (
+                subprocess.run(
+                    ["ydotool", "type", "--", text], check=False
+                ).returncode == 0
+            )
+        # wtype only works with native Wayland windows.
         if shutil.which("wtype"):
             return subprocess.run(["wtype", text], check=False).returncode == 0
-        # Fallback: xdotool via XWayland (works when DISPLAY is set)
+        # Fallback: copy, then emulate Ctrl+V via wtype.
+        if copy_to_clipboard(text) and shutil.which("wtype"):
+            time.sleep(0.05)
+            return (
+                subprocess.run(
+                    ["wtype", "-M", "ctrl", "v", "-m", "ctrl"], check=False
+                ).returncode == 0
+            )
+        # Last resort: xdotool via XWayland (only for XWayland apps).
         if shutil.which("xdotool"):
             return (
                 subprocess.run(
                     ["xdotool", "type", "--clearmodifiers", text], check=False
-                ).returncode
-                == 0
+                ).returncode == 0
             )
         return False
 
+    # X11 path
     if shutil.which("xdotool"):
         return (
             subprocess.run(
                 ["xdotool", "type", "--clearmodifiers", text], check=False
-            ).returncode
-            == 0
+            ).returncode == 0
         )
 
     return False

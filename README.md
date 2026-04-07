@@ -139,7 +139,10 @@ Monitor system behavior:
 ### Common Issues
 -   **API Error (500)**: Ensure your `GROQ_API_KEY` is correct in `.env`.
 -   **No Audio**: Verify your microphone is recognized by `arecord -l`.
--   **Hotkey Not Working**: Ensure `pynput` is installed and the daemon is running.
+-   **Hotkey Not Working on Wayland**:
+    -   Option 1 (Recommended): Go to **Settings > Keyboard > View and Customize Shortcuts > Custom Shortcuts**. Add a new one named `Lynx Toggle` with the command `/full/path/to/Lynx/scripts/lynx_toggle.sh` and bind it to your preferred key.
+    -   Option 2: Add your user to the `input` group: `sudo usermod -aG input $USER` (requires logout/login). This allows the daemon to read keys directly.
+-   **System Tray Missing on GNOME**: Install the AppIndicator support: `sudo apt install gir1.2-ayatanaappindicator3-0.1`.
 
 ## Configuration
 
