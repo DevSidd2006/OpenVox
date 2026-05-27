@@ -4,6 +4,8 @@ Lynx is a high-performance, privacy-first voice dictation system that transforms
 
 **Hold your hotkey, speak naturally, and watch as perfectly formatted text appears at your cursor.**
 
+**Keywords:** voice recognition, speech-to-text, STT, Whisper, dictation, voice input, Linux productivity, Groq, AI writing assistant, push-to-talk
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
@@ -11,6 +13,14 @@ Lynx is a high-performance, privacy-first voice dictation system that transforms
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
+
+---
+
+## 🎬 Quick Demo
+
+![Lynx Demo](https://via.placeholder.com/800x400?text=Lynx+Demo+GIF+-+Record+a+short+demo+and+replace+this)
+
+*Record a quick demo and replace with your own GIF. Use tools like `byzanz` or `peek` to capture.*
 
 ---
 
