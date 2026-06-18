@@ -79,7 +79,7 @@ sudo apt update && sudo apt install -y alsa-utils wl-clipboard wtype libnotify-b
 ```bash
 # Clone the repository
 git clone https://github.com/devsidd/openvox.git
-cd willow-groq-clone
+cd openvox
 
 # Run the bootstrap script
 ./scripts/bootstrap.sh

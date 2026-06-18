@@ -57,7 +57,7 @@ Looking for a way to contribute? Try these:
 
 ```bash
 git clone https://github.com/devsidd/openvox.git
-cd willow-groq-clone
+cd openvox
 
 # Create venv
 python -m venv .venv

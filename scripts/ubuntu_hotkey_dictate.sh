@@ -5,7 +5,7 @@ set -euo pipefail
 # Requires: arecord, curl, jq, xclip (X11) or wl-copy (Wayland).
 
 API_URL="${OPENVOX_API_URL:-http://127.0.0.1:8080}"
-TMP_WAV="/tmp/lynx_$(date +%s).wav"
+TMP_WAV="/tmp/openvox_$(date +%s).wav"
 
 # 8 second push-to-talk style capture. Adjust duration as needed.
 arecord -f cd -t wav -d 8 "$TMP_WAV" >/dev/null 2>&1
