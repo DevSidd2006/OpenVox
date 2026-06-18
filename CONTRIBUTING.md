@@ -1,6 +1,6 @@
-# Contributing to Lynx
+# Contributing to OpenVox
 
-Welcome! Lynx is a community-driven project. Contributions are welcome.
+Welcome! OpenVox is a community-driven project. Contributions are welcome.
 
 ## How to Contribute
 
@@ -37,7 +37,7 @@ Welcome! Lynx is a community-driven project. Contributions are welcome.
 Run formatting before submitting:
 ```bash
 # Python
-black app/ scripts/lynx_daemon/
+black app/ scripts/openvox_daemon/
 
 # Shell
 shellcheck scripts/*.sh
@@ -56,7 +56,7 @@ Looking for a way to contribute? Try these:
 ## Development Setup
 
 ```bash
-git clone https://github.com/devsidd/willow-groq-clone.git
+git clone https://github.com/devsidd/openvox.git
 cd willow-groq-clone
 
 # Create venv

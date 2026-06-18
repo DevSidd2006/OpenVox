@@ -1,4 +1,4 @@
-# Lynx Roadmap
+# OpenVox Roadmap
 
 > Community-driven voice dictation for Linux
 
