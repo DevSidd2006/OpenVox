@@ -42,7 +42,7 @@ bash scripts/run_hotkey_daemon.sh > hotkey.log 2>&1 &
 DAEMON_PID=$!
 
 echo "--------------------------------------------------"
-echo "Lynx is now running!"
+echo "OpenVox is now running!"
 echo "Backend PID: $BACKEND_PID (logs: backend.log)"
 echo "Hotkey PID:  $DAEMON_PID (logs: hotkey.log)"
 echo "--------------------------------------------------"
