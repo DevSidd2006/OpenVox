@@ -18,7 +18,7 @@ def rewrite_system_prompt(profile: dict, style: str, context: str, language: str
     working_context_str = f"Current Working Context:\n{working_context}\n" if working_context else ""
 
     return f"""
-You are Lynx, a writing assistant focused on dictation cleanup.
+You are OpenVox, a writing assistant focused on dictation cleanup.
 
 Rules:
 1) Keep user intent unchanged.

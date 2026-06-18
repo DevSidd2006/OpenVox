@@ -41,19 +41,19 @@ class DaemonConfig:
 
 
 cfg = DaemonConfig(
-    api_url=os.getenv("WILLOW_CLONE_URL", "http://127.0.0.1:18080"),
-    hotkey=os.getenv("WILLOW_HOTKEY", "ctrl+space"),
-    style=os.getenv("WILLOW_STYLE", "professional"),
-    context=os.getenv("WILLOW_CONTEXT", "email"),
-    language=os.getenv("WILLOW_LANGUAGE", "en"),
-    auto_paste=_bool_env("WILLOW_AUTO_PASTE"),
-    insert_mode=os.getenv("WILLOW_INSERT_MODE", "paste").lower(),
-    overlay_enabled=_bool_env("WILLOW_OVERLAY"),
-    audio_feedback=_bool_env("WILLOW_AUDIO_FEEDBACK"),
-    overlay_position=os.getenv("WILLOW_OVERLAY_POSITION", "top-right").lower(),
-    vad_enabled=_bool_env("WILLOW_VAD_ENABLED"),
-    vad_silence_timeout=float(os.getenv("WILLOW_VAD_SILENCE_TIMEOUT", "3")),
-    vad_aggressiveness=int(os.getenv("WILLOW_VAD_AGGRESSIVENESS", "2")),
+    api_url=os.getenv("OPENVOX_API_URL", "http://127.0.0.1:18080"),
+    hotkey=os.getenv("OPENVOX_HOTKEY", "ctrl+space"),
+    style=os.getenv("OPENVOX_STYLE", "professional"),
+    context=os.getenv("OPENVOX_CONTEXT", "email"),
+    language=os.getenv("OPENVOX_LANGUAGE", "en"),
+    auto_paste=_bool_env("OPENVOX_AUTO_PASTE"),
+    insert_mode=os.getenv("OPENVOX_INSERT_MODE", "paste").lower(),
+    overlay_enabled=_bool_env("OPENVOX_OVERLAY"),
+    audio_feedback=_bool_env("OPENVOX_AUDIO_FEEDBACK"),
+    overlay_position=os.getenv("OPENVOX_OVERLAY_POSITION", "top-right").lower(),
+    vad_enabled=_bool_env("OPENVOX_VAD_ENABLED"),
+    vad_silence_timeout=float(os.getenv("OPENVOX_VAD_SILENCE_TIMEOUT", "3")),
+    vad_aggressiveness=int(os.getenv("OPENVOX_VAD_AGGRESSIVENESS", "2")),
 )
 
 

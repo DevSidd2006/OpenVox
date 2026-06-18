@@ -1,1 +1,1 @@
-"""Lynx push-to-talk hotkey daemon package."""
+"""OpenVox push-to-talk hotkey daemon package."""

@@ -9,4 +9,4 @@ def notify(message: str) -> None:
     """Send a desktop notification and print to stdout."""
     print(message, flush=True)
     if shutil.which("notify-send"):
-        subprocess.run(["notify-send", "Lynx", message], check=False)
+        subprocess.run(["notify-send", "OpenVox", message], check=False)
