@@ -4,8 +4,8 @@ set -euo pipefail
 # Records a short clip, sends to local server, and copies polished text to clipboard.
 # Requires: arecord, curl, jq, xclip (X11) or wl-copy (Wayland).
 
-API_URL="${WILLOW_CLONE_URL:-http://127.0.0.1:8080}"
-TMP_WAV="/tmp/lynx_$(date +%s).wav"
+API_URL="${OPENVOX_API_URL:-http://127.0.0.1:8080}"
+TMP_WAV="/tmp/openvox_$(date +%s).wav"
 
 # 8 second push-to-talk style capture. Adjust duration as needed.
 arecord -f cd -t wav -d 8 "$TMP_WAV" >/dev/null 2>&1
@@ -39,4 +39,4 @@ if command -v xdotool >/dev/null 2>&1; then
 fi
 
 rm -f "$TMP_WAV"
-echo "Lynx dictation copied to clipboard"
+echo "OpenVox dictation copied to clipboard"

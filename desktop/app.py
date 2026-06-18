@@ -20,7 +20,7 @@ ENV_PATH = ROOT / ".env"
 class DesktopApp:
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
-        self.root.title("Lynx Desktop")
+        self.root.title("OpenVox Desktop")
         self.root.geometry("640x500")
         self.root.minsize(640, 500)
 
@@ -44,7 +44,7 @@ class DesktopApp:
         frame = tk.Frame(self.root, padx=14, pady=12)
         frame.pack(fill="both", expand=True)
 
-        title = tk.Label(frame, text="Lynx Desktop Controller", font=("TkDefaultFont", 13, "bold"))
+        title = tk.Label(frame, text="OpenVox Desktop Controller", font=("TkDefaultFont", 13, "bold"))
         title.pack(anchor="w")
 
         status = tk.Label(frame, textvariable=self.status_var)
@@ -73,19 +73,19 @@ class DesktopApp:
             "GROQ_API_KEY",
             "HOST",
             "PORT",
-            "WILLOW_CLONE_URL",
-            "WILLOW_HOTKEY",
-            "WILLOW_AUTO_PASTE",
-            "WILLOW_INSERT_MODE",
-            "WILLOW_OVERLAY",
-            "WILLOW_STYLE",
-            "WILLOW_CONTEXT",
-            "WILLOW_LANGUAGE",
-            "WILLOW_AUDIO_FEEDBACK",
-            "WILLOW_OVERLAY_POSITION",
-            "WILLOW_VAD_ENABLED",
-            "WILLOW_VAD_SILENCE_TIMEOUT",
-            "WILLOW_VAD_AGGRESSIVENESS",
+            "OPENVOX_API_URL",
+            "OPENVOX_HOTKEY",
+            "OPENVOX_AUTO_PASTE",
+            "OPENVOX_INSERT_MODE",
+            "OPENVOX_OVERLAY",
+            "OPENVOX_STYLE",
+            "OPENVOX_CONTEXT",
+            "OPENVOX_LANGUAGE",
+            "OPENVOX_AUDIO_FEEDBACK",
+            "OPENVOX_OVERLAY_POSITION",
+            "OPENVOX_VAD_ENABLED",
+            "OPENVOX_VAD_SILENCE_TIMEOUT",
+            "OPENVOX_VAD_AGGRESSIVENESS",
         ]
 
         for i, key in enumerate(keys):
@@ -124,19 +124,19 @@ class DesktopApp:
         defaults = {
             "HOST": "127.0.0.1",
             "PORT": "18080",
-            "WILLOW_CLONE_URL": "http://127.0.0.1:18080",
-            "WILLOW_HOTKEY": "ctrl+space",
-            "WILLOW_AUTO_PASTE": "true",
-            "WILLOW_INSERT_MODE": "paste",
-            "WILLOW_OVERLAY": "true",
-            "WILLOW_STYLE": "professional",
-            "WILLOW_CONTEXT": "email",
-            "WILLOW_LANGUAGE": "en",
-            "WILLOW_AUDIO_FEEDBACK": "true",
-            "WILLOW_OVERLAY_POSITION": "top-right",
-            "WILLOW_VAD_ENABLED": "true",
-            "WILLOW_VAD_SILENCE_TIMEOUT": "3",
-            "WILLOW_VAD_AGGRESSIVENESS": "2",
+            "OPENVOX_API_URL": "http://127.0.0.1:18080",
+            "OPENVOX_HOTKEY": "ctrl+space",
+            "OPENVOX_AUTO_PASTE": "true",
+            "OPENVOX_INSERT_MODE": "paste",
+            "OPENVOX_OVERLAY": "true",
+            "OPENVOX_STYLE": "professional",
+            "OPENVOX_CONTEXT": "email",
+            "OPENVOX_LANGUAGE": "en",
+            "OPENVOX_AUDIO_FEEDBACK": "true",
+            "OPENVOX_OVERLAY_POSITION": "top-right",
+            "OPENVOX_VAD_ENABLED": "true",
+            "OPENVOX_VAD_SILENCE_TIMEOUT": "3",
+            "OPENVOX_VAD_AGGRESSIVENESS": "2",
         }
 
         for key, var in self.vars.items():
@@ -240,16 +240,16 @@ class DesktopApp:
             messagebox.showerror("Service Error", out)
 
     def start_services(self) -> None:
-        code1, out1 = self._run_cmd(["systemctl", "--user", "start", "willow-groq-clone-api.service"])
-        code2, out2 = self._run_cmd(["systemctl", "--user", "start", "willow-groq-clone-hotkey.service"])
+        code1, out1 = self._run_cmd(["systemctl", "--user", "start", "openvox-api.service"])
+        code2, out2 = self._run_cmd(["systemctl", "--user", "start", "openvox-hotkey.service"])
         if code1 == 0:
             self.status_var.set("Requested service start")
         else:
             messagebox.showerror("Service Error", f"API start failed:\n{out1}\n\nHotkey output:\n{out2}")
 
     def stop_services(self) -> None:
-        self._run_cmd(["systemctl", "--user", "stop", "willow-groq-clone-hotkey.service"])
-        self._run_cmd(["systemctl", "--user", "stop", "willow-groq-clone-api.service"])
+        self._run_cmd(["systemctl", "--user", "stop", "openvox-hotkey.service"])
+        self._run_cmd(["systemctl", "--user", "stop", "openvox-api.service"])
         self.status_var.set("Requested service stop")
 
     def _health_poller(self) -> None:

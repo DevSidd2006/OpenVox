@@ -6,8 +6,8 @@
 
 **Dual config loading with different variable names:**
 - `app/config.py` reads `GROQ_*` env vars
-- `scripts/lynx_daemon/config.py` reads `WILLOW_*` env vars
-- Files: `app/config.py`, `scripts/lynx_daemon/config.py`
+- `scripts/openvox_daemon/config.py` reads `OPENVOX_*` env vars
+- Files: `app/config.py`, `scripts/openvox_daemon/config.py`
 - Impact: Confusing naming, easy to misconfigure
 - Fix approach: Unify env var naming under one prefix
 
@@ -30,28 +30,28 @@
 - Fix approach: Use module-level singleton or dependency injection
 
 **Hardcoded systemd service names:**
-- Service names hardcoded as `willow-groq-clone-api.service` and `willow-groq-clone-hotkey.service`
+- Service names hardcoded as `openvox-api.service` and `openvox-hotkey.service`
 - Files: `desktop/app.py`, `scripts/install_user_service.sh`
-- Impact: Inconsistent with project name "Lynx", confusing
-- Fix approach: Rename to `lynx-api.service` and `lynx-hotkey.service`
+- Impact: Inconsistent with project name "OpenVox", confusing
+- Fix approach: Rename to `openvox-api.service` and `openvox-hotkey.service`
 
 ## Known Bugs
 
 **Overlay geometry computed before window is ready:**
 - `root.winfo_screenwidth()` called immediately in `_run()` before `update_idletasks()`
-- File: `scripts/lynx_daemon/overlay.py`
+- File: `scripts/openvox_daemon/overlay.py`
 - Trigger: Overlay starts with potentially incorrect screen dimensions
 - Workaround: `root.update_idletasks()` before geometry call
 
 **Daemon config is frozen but runtime toggles mutate it:**
 - `cfg.audio_feedback` toggled via `object.__setattr__(cfg, "audio_feedback", ...)` despite `@dataclass(frozen=True)`
-- File: `scripts/lynx_daemon/tray.py`
+- File: `scripts/openvox_daemon/tray.py`
 - Impact: Breaks the frozen contract, could cause unexpected behavior
 - Fix approach: Use a mutable inner container or recreate config object
 
 **VAD auto-stop scheduling race:**
 - `_auto_stop_timer = threading.Timer(0, self.stop_recording)` scheduled from within `_record_worker`
-- File: `scripts/lynx_daemon/recorder.py`
+- File: `scripts/openvox_daemon/recorder.py`
 - Impact: Timer fires after `process_audio` may have already started, unclear ordering
 - Workaround: None observed
 
@@ -73,13 +73,13 @@
 
 **WAV file written to disk then read back:**
 - `tempfile.mkstemp()` creates temp WAV, written by `_record_worker`, read in `process_audio`, then deleted
-- Files: `scripts/lynx_daemon/recorder.py`
+- Files: `scripts/openvox_daemon/recorder.py`
 - Cause: Wave module requires seekable file; simplest approach given constraints
 - Improvement path: Use io.BytesIO in memory buffer
 
 **Blocking HTTP request in recorder:**
 - `urllib.request.urlopen(request, timeout=60)` blocks during transcription
-- File: `scripts/lynx_daemon/recorder.py`
+- File: `scripts/openvox_daemon/recorder.py`
 - Impact: Recording thread exits but `process_audio` is synchronous on the caller's thread
 - Fix approach: Run `process_audio` in a thread pool
 
@@ -87,14 +87,14 @@
 
 **System tray without AppIndicator library:**
 - pystray used without ayatana-appindicator on GNOME Wayland
-- File: `scripts/lynx_daemon/tray.py`
+- File: `scripts/openvox_daemon/tray.py`
 - Why fragile: Tray icon silently fails to appear on many Wayland setups
 - Safe modification: Keep fallback tray-less mode
 - Test coverage: Manual only
 
 **Wayland hotkey detection relies on XWayland:**
 - Global hotkeys on Wayland require XWayland or special setup
-- File: `scripts/lynx_daemon/tray.py` (`_warn_wayland_hotkey`)
+- File: `scripts/openvox_daemon/tray.py` (`_warn_wayland_hotkey`)
 - Why fragile: Hotkeys silently fail on pure Wayland without XWayland
 - Safe modification: Check `WAYLAND_DISPLAY` and `XDG_SESSION_TYPE`
 - Test coverage: Environment-dependent manual testing
@@ -159,7 +159,7 @@
 
 **Hotkey daemon:**
 - No tests for recorder, overlay, tray, clipboard
-- Files: `scripts/lynx_daemon/recorder.py`, `scripts/lynx_daemon/overlay.py`, etc.
+- Files: `scripts/openvox_daemon/recorder.py`, `scripts/openvox_daemon/overlay.py`, etc.
 - Risk: Silent failures on different systems
 - Priority: Medium
 

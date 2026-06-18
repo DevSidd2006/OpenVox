@@ -5,11 +5,11 @@
 ## Directory Layout
 
 ```
-/home/devisdd/Lynx/
+/home/devisdd/OpenVox/
 ├── app/                    # Python backend (FastAPI)
 ├── desktop/                # Tkinter desktop controller app
 ├── scripts/                # Shell scripts and hotkey daemon
-│   └── lynx_daemon/        # Python daemon modules
+│   └── openvox_daemon/        # Python daemon modules
 ├── web/                    # Frontend (HTML/CSS/JS)
 ├── data/                   # SQLite database
 ├── docs/                   # Documentation
@@ -45,10 +45,10 @@
   - `start_prod.sh` - Production API server runner
   - `run_hotkey_daemon.sh` - Hotkey daemon runner
   - `start_all.sh` - Starts both API and hotkey daemon
-  - `hotkey_push_to_talk.py` - Daemon entry point (imports lynx_daemon)
+  - `hotkey_push_to_talk.py` - Daemon entry point (imports openvox_daemon)
   - `install_user_service.sh` - systemd user service installer
 
-### `scripts/lynx_daemon/`
+### `scripts/openvox_daemon/`
 - **Purpose:** Python package for the push-to-talk daemon (imported by hotkey_push_to_talk.py)
 - **Key files:**
   - `recorder.py` - PushToTalk class: recording, VAD, API call, clipboard/typing
@@ -56,7 +56,7 @@
   - `tray.py` - SystemTrayIcon class and `run_daemon()` function
   - `clipboard.py` - `copy_to_clipboard()` and `paste_into_active_window()`
   - `vad.py` - VoiceActivityDetector wrapper around webrtcvad
-  - `config.py` - DaemonConfig dataclass (WILLOW_* env vars)
+  - `config.py` - DaemonConfig dataclass (OPENVOX_* env vars)
   - `audio_feedback.py` - Sound playback via paplay/pw-play/aplay
   - `notifier.py` - System notifications via notify-send
   - `rms.py` - Audio level calculator
@@ -69,7 +69,7 @@
 
 ### `data/`
 - **Purpose:** Persistent storage
-- **Contains:** `lynx.db` (SQLite database), `.gitkeep`
+- **Contains:** `openvox.db` (SQLite database), `.gitkeep`
 
 ### `docs/`
 - **Purpose:** Additional documentation
@@ -82,12 +82,12 @@
 - `desktop/app.py` - Tkinter desktop controller
 
 ### Configuration
-- `.env` - Runtime environment variables (GROQ_API_KEY, WILLOW_* settings)
+- `.env` - Runtime environment variables (GROQ_API_KEY, OPENVOX_* settings)
 - `app/config.py` - Backend settings (GROQ_* vars)
-- `scripts/lynx_daemon/config.py` - Daemon settings (WILLOW_* vars)
+- `scripts/openvox_daemon/config.py` - Daemon settings (OPENVOX_* vars)
 
 ### Database
-- `data/lynx.db` - SQLite database file
+- `data/openvox.db` - SQLite database file
 
 ## Naming Conventions
 
@@ -104,7 +104,7 @@
 - snake_case: `fetch_profile`, `list_entries`, `copy_to_clipboard`, `token_from_key`
 
 ### Constants/Config
-- UPPER_SNAKE_CASE for env-backed constants: `GROQ_API_KEY`, `WILLOW_HOTKEY`
+- UPPER_SNAKE_CASE for env-backed constants: `GROQ_API_KEY`, `OPENVOX_HOTKEY`
 
 ## Where to Add New Code
 
@@ -118,8 +118,8 @@
 - **Prompt logic:** Add function to `app/prompts.py`
 
 ### New Hotkey Daemon Feature
-- **Implementation:** Add to `scripts/lynx_daemon/` as new module
-- **Config:** Add env var loading in `scripts/lynx_daemon/config.py`
+- **Implementation:** Add to `scripts/openvox_daemon/` as new module
+- **Config:** Add env var loading in `scripts/openvox_daemon/config.py`
 
 ### New Frontend Feature
 - **UI:** Add to `web/index.html`
@@ -138,7 +138,7 @@
 - **Generated:** Yes (created on first `init_db()` call)
 - **Committed:** No (`.gitkeep` only, actual `.db` file gitignored)
 
-### `scripts/lynx_daemon/__pycache__/`
+### `scripts/openvox_daemon/__pycache__/`
 - **Purpose:** Python bytecode cache
 - **Generated:** Yes
 - **Committed:** No

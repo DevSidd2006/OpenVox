@@ -6,10 +6,10 @@
 
 **Overall:** Client-Server with Daemon Overlay
 
-Lynx follows a three-tier architecture:
+OpenVox follows a three-tier architecture:
 - **FastAPI backend** (`app/`) serves the web UI and REST API
 - **Web frontend** (`web/`) is a single-page application for configuration and history
-- **Hotkey daemon** (`scripts/lynx_daemon/`) runs as a background service intercepting global keyboard shortcuts for push-to-talk recording
+- **Hotkey daemon** (`scripts/openvox_daemon/`) runs as a background service intercepting global keyboard shortcuts for push-to-talk recording
 
 ## Layers
 
@@ -22,7 +22,7 @@ Lynx follows a three-tier architecture:
 
 ### Database Layer
 - **Purpose:** Persistent storage for user profile, app settings, and transcription history
-- **Location:** `data/lynx.db`
+- **Location:** `data/openvox.db`
 - **Contains:** SQLite database with tables: `profile`, `entries`, `app_settings`
 - **Depends on:** `app/db.py` for connection management
 - **Used by:** Backend API exclusively
@@ -36,7 +36,7 @@ Lynx follows a three-tier architecture:
 
 ### Hotkey Daemon Layer
 - **Purpose:** Global hotkey listener (pynput) + push-to-talk recorder + overlay + system tray
-- **Location:** `scripts/lynx_daemon/`
+- **Location:** `scripts/openvox_daemon/`
 - **Contains:** `recorder.py`, `overlay.py`, `tray.py`, `clipboard.py`, `vad.py`, `audio_feedback.py`, `config.py`
 - **Depends on:** ALSA (`arecord`), pynput, webrtcvad, pystray, tkinter (for overlay)
 - **Used by:** System services or desktop app launcher
@@ -56,7 +56,7 @@ Lynx follows a three-tier architecture:
 2. `recorder.py` spawns `arecord` subprocess capturing raw S16_LE audio at 16kHz mono
 3. Audio written to temporary WAV file via `_record_worker()` thread
 4. RMS levels sent to `VoiceOverlay` for visual feedback
-5. VAD (webrtcvad) monitors for silence; auto-stops after `WILLOW_VAD_SILENCE_TIMEOUT` seconds
+5. VAD (webrtcvad) monitors for silence; auto-stops after `OPENVOX_VAD_SILENCE_TIMEOUT` seconds
 6. User releases hotkey → `stop_recording()` called
 7. WAV file sent via multipart POST to `POST /api/transcribe`
 8. Backend calls Groq Whisper for transcription, Groq LLM for rewrite
@@ -86,22 +86,22 @@ Lynx follows a three-tier architecture:
 
 ### PushToTalk
 - **Purpose:** Manages recording lifecycle, VAD, API call, and text insertion
-- **Examples:** `scripts/lynx_daemon/recorder.py`
+- **Examples:** `scripts/openvox_daemon/recorder.py`
 - **Pattern:** State machine (idle → recording → processing → idle)
 
 ### VoiceOverlay
 - **Purpose:** Tkinter-based floating overlay showing audio levels and state
-- **Examples:** `scripts/lynx_daemon/overlay.py`
+- **Examples:** `scripts/openvox_daemon/overlay.py`
 - **Pattern:** Owns tkinter mainloop in background thread
 
 ### SystemTrayIcon
 - **Purpose:** pystray icon with menu for status, audio toggle, quit
-- **Examples:** `scripts/lynx_daemon/tray.py`
+- **Examples:** `scripts/openvox_daemon/tray.py`
 - **Pattern:** Runs blocking event loop on main daemon thread
 
 ### DaemonConfig
-- **Purpose:** Frozen dataclass loading all `WILLOW_*` environment variables
-- **Examples:** `scripts/lynx_daemon/config.py`
+- **Purpose:** Frozen dataclass loading all `OPENVOX_*` environment variables
+- **Examples:** `scripts/openvox_daemon/config.py`
 - **Pattern:** Immutable configuration object
 
 ## Entry Points
@@ -148,7 +148,7 @@ Lynx follows a three-tier architecture:
 
 **CORS:** Wide open (`allow_origins=["*"]`) for local development
 
-**Environment:** All configuration via `.env` file loaded by `dotenv` in both `app/config.py` and `scripts/lynx_daemon/config.py`
+**Environment:** All configuration via `.env` file loaded by `dotenv` in both `app/config.py` and `scripts/openvox_daemon/config.py`
 
 ---
 

@@ -25,7 +25,7 @@ from .models import AppSettingModel, ProfileModel, RewriteRequest, RewriteRespon
 APP_ROOT = Path(__file__).resolve().parent.parent
 WEB_ROOT = APP_ROOT / "web"
 
-app = FastAPI(title="Lynx", version="1.0.0")
+app = FastAPI(title="OpenVox", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

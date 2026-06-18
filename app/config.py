@@ -24,5 +24,5 @@ settings = Settings(
     text_model=os.getenv("GROQ_TEXT_MODEL", "llama-3.3-70b-versatile"),
     host=os.getenv("HOST", "127.0.0.1"),
     port=int(os.getenv("PORT", "8080")),
-    database_path=os.getenv("DATABASE_PATH", "./data/lynx.db"),
+    database_path=os.getenv("DATABASE_PATH", "./data/openvox.db"),
 )

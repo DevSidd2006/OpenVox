@@ -71,7 +71,7 @@
 
 **Environment:**
 - `.env` file at project root
-- Loaded via `dotenv.load_dotenv()` in both `app/config.py` and `scripts/lynx_daemon/config.py`
+- Loaded via `dotenv.load_dotenv()` in both `app/config.py` and `scripts/openvox_daemon/config.py`
 - No `.env` validation library - silent defaults if missing
 
 **Build:**
@@ -83,13 +83,13 @@
 - `GROQ_STT_MODEL` - Whisper model (default: whisper-large-v3-turbo)
 - `GROQ_TEXT_MODEL` - LLM model (default: llama-3.3-70b-versatile)
 - `HOST` / `PORT` - API server binding
-- `WILLOW_CLONE_URL` - Daemon's API endpoint
-- `WILLOW_HOTKEY` - Push-to-talk hotkey (default: ctrl+space)
-- `WILLOW_STYLE` / `WILLOW_CONTEXT` / `WILLOW_LANGUAGE` - Default rewriting parameters
-- `WILLOW_AUTO_PASTE` / `WILLOW_INSERT_MODE` - Clipboard behavior
-- `WILLOW_OVERLAY` - Enable/disable voice overlay
-- `WILLOW_AUDIO_FEEDBACK` - Sound notifications
-- `WILLOW_VAD_ENABLED` / `WILLOW_VAD_SILENCE_TIMEOUT` / `WILLOW_VAD_AGGRESSIVENESS` - VAD settings
+- `OPENVOX_CLONE_URL` - Daemon's API endpoint
+- `OPENVOX_HOTKEY` - Push-to-talk hotkey (default: ctrl+space)
+- `OPENVOX_STYLE` / `OPENVOX_CONTEXT` / `OPENVOX_LANGUAGE` - Default rewriting parameters
+- `OPENVOX_AUTO_PASTE` / `OPENVOX_INSERT_MODE` - Clipboard behavior
+- `OPENVOX_OVERLAY` - Enable/disable voice overlay
+- `OPENVOX_AUDIO_FEEDBACK` - Sound notifications
+- `OPENVOX_VAD_ENABLED` / `OPENVOX_VAD_SILENCE_TIMEOUT` / `OPENVOX_VAD_AGGRESSIVENESS` - VAD settings
 
 ## Platform Requirements
 

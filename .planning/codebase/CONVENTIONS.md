@@ -22,7 +22,7 @@
 - `PascalCase` model names: `ProfileModel`, `RewriteRequest`, `RewriteResponse`
 
 **Constants/Env vars:**
-- `UPPER_SNAKE_CASE` for environment-backed constants: `GROQ_API_KEY`, `WILLOW_HOTKEY`
+- `UPPER_SNAKE_CASE` for environment-backed constants: `GROQ_API_KEY`, `OPENVOX_HOTKEY`
 - Private module-level constants: `_ALIASES`, `_ICON_COLORS`
 
 ## Code Style
@@ -64,7 +64,7 @@
 ## Logging
 
 **Framework:** Print statements to stdout/stderr
-- `print(f"[Lynx] message", flush=True)` in daemon
+- `print(f"[OpenVox] message", flush=True)` in daemon
 - `traceback.print_exc()` for exception details
 - Log files: `backend.log` and `hotkey.log` in project root (external process capture)
 
@@ -95,11 +95,11 @@
 
 **Exports:** No explicit `__all__` defined
 
-**Barrel Files:** `app/__init__.py` and `scripts/lynx_daemon/__init__.py` are empty
+**Barrel Files:** `app/__init__.py` and `scripts/openvox_daemon/__init__.py` are empty
 
 **Package Structure:**
 - `app/` - FastAPI package with `main.py` as entry
-- `scripts/lynx_daemon/` - Sub-package imported by `hotkey_push_to_talk.py`
+- `scripts/openvox_daemon/` - Sub-package imported by `hotkey_push_to_talk.py`
 
 ---
 

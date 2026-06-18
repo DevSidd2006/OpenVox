@@ -102,7 +102,7 @@ class PushToTalk:
         if self.recording:
             return
 
-        fd, path = tempfile.mkstemp(prefix="lynx_ptt_", suffix=".wav")
+        fd, path = tempfile.mkstemp(prefix="openvox_ptt_", suffix=".wav")
         os.close(fd)
         self.current_wav = Path(path)
 
@@ -187,7 +187,7 @@ class PushToTalk:
                 "language": lang,
                 "auto_rewrite": "true",
             }
-            boundary = "----LynxBoundary7d9a1f"
+            boundary = "----OpenVoxBoundary7d9a1f"
             body = bytearray()
             for key, value in data.items():
                 body.extend(f"--{boundary}\r\n".encode())

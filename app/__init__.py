@@ -1,1 +1,1 @@
-"""Lynx assistant package."""
+"""OpenVox assistant package."""
